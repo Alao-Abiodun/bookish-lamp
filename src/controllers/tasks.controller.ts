@@ -8,27 +8,27 @@ import {
   Body,
   Param,
 } from '@nestjs/common';
-import { CreateTaskDto } from '../../dtos';
-import { TasksService } from 'src/tasks/services';
-import { Task } from '../../interfaces';
+import { CreateTaskDto } from '../dtos';
+import { TasksService } from '../services';
+import { ITask } from '../interfaces';
 
 @Controller('tasks')
 export class TasksController {
   constructor(private readonly taskService: TasksService) {}
 
   @Get()
-  findAll(): Task[] {
+  findAll(): Promise<ITask[]> {
     return this.taskService.findAll();
   }
 
   @Get(':id')
-  findOne(@Param('id') id): Task {
+  findOne(@Param('id') id: string): Promise<ITask> {
     return this.taskService.findOne(id);
   }
 
   @Post()
-  create(@Body() createTask: CreateTaskDto): string {
-    return `title: ${createTask.title}, description: ${createTask.description}, completed: ${createTask.completed}`;
+  create(@Body() data: CreateTaskDto): Promise<ITask> {
+    return this.taskService.create(data);
   }
 
   @Delete(':id')

@@ -1,2 +1,2 @@
 /* eslint-disable prettier/prettier */
-export * from './tasks/tasks.service';
+export * from './tasks.service';
